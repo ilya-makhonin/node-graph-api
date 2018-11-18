@@ -9,7 +9,8 @@
   "author": "Ilia Makhonin",
   "license": "ISC",
   "dependencies": {
-    "hapi": "^17.7.0"
+    "hapi": "^17.7.0",
+    "mongoose": "^5.3.12"
   },
   "devDependencies": {
     "nodemon": "^1.18.6"
