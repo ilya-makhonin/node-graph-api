@@ -1,0 +1,17 @@
+{
+  "name": "powerful-api",
+  "version": "1.0.0",
+  "description": "API on Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src\\index.js"
+  },
+  "author": "Ilia Makhonin",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^17.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
+  }
+}
