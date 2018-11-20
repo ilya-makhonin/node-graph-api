@@ -9,7 +9,9 @@
   "author": "Ilia Makhonin",
   "license": "ISC",
   "dependencies": {
-    "hapi": "^17.7.0",
+    "apollo-server-hapi": "^1.3.6",
+    "graphql": "^14.0.2",
+    "hapi": "^17.4.0",
     "mongoose": "^5.3.12"
   },
   "devDependencies": {
