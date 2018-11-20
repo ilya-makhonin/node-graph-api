@@ -34,7 +34,26 @@ const init = async () => {
                 });
                 return painting.save();
             }
-        }
+        },
+        {
+            method: 'POST',
+            path: '/api/v1/paintings/del',
+            handler: (req, reply) => {
+                const { name } = req.payload;
+                if (name === '') {
+                    Painting.deleteMany({}, (err) => {
+                        if (err) return err;
+                    });
+                    console.log('It\'s many deleting');
+                } else {
+                    Painting.deleteOne({ name: name }, (err) => {
+                        if (err) return err;
+                    });
+                    console.log('It\'s one deleting');
+                }
+                return Painting.find();
+            }
+        },
     ]);
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
