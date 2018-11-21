@@ -39,13 +39,7 @@ server.route([
             tags: ['api', 'v1', 'painting']
         },
         handler(req, reply) {
-            return `
-            <a href="/">Back</a>
-            <br/>
-            ${Painting.find()}
-            <br/>
-            <a href="/">Back</a>
-            `;
+            return Painting.find();
         }
     },
     {
@@ -58,14 +52,13 @@ server.route([
         },
         handler: (req, reply) => {
             const { name, url, technique } = req.payload;
+            console.dir(req.payload)
+            console.log(name, url, technique);
+            if (name === undefined || url === undefined) {
+                return false;
+            }
             const painting = new Painting({ name, url, technique });
-            return `
-            <a href="/">Back</a>
-            <br/>
-            ${Painting.find()}
-            <br/>
-            <a href="/">Back</a>
-            `;
+            return painting.save();
         }
     },
     {
@@ -83,13 +76,7 @@ server.route([
                     if (err) return err;
                 });
             }
-            return `
-            <a href="/">Back</a>
-            <br/>
-            ${Painting.find()}
-            <br/>
-            <a href="/">Back</a>
-            `;                            // Возвращаем текущее состояние БД
+            return Painting.find();  // Возвращаем текущее состояние БД
         }
     },
 ]);

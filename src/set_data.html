@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <form action="#" method="post">
+            <label>
+                <input type="text" value="Do" id="paintingName" required />
+            </label>
+            <br/>
+            <label>
+                <input type="text" value="You" id="paintingUrl" required />
+            </label>
+            <br/>
+            <label>
+                <input type="text" value="One, Two, Three" id="paintingTechnique" required />
+            </label>
+            <input type="submit" id="send" />
+        </form>
+    </div>
+
+    <script>
+        function set_data(event) {
+            event.preventDefault();
+            let name = document.querySelector('#paintingName').value;
+            let url = document.querySelector('#paintingUrl').value;
+            let technique = document.querySelector('#paintingTechnique').value;
+
+            if (name === '' || url === '' || technique === '') {
+                return false;
+            }
+
+            technique = technique.split(',');
+            if (technique.length === 1) {
+                technique = `technique=${technique[0]}`;
+            } else {
+                let arr_like_str = '';
+                technique.forEach(elem => {
+                    arr_like_str += `technique=${elem.trim()}&`;
+                });
+                technique = arr_like_str.slice(0, -1);
+            }
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'http://localhost:4000/api/v1/paintings', true);
+            xhr.send(`name=${name}&url=${url}&${technique}`);
+        }
+
+        document.querySelector('#send').onclick = set_data;
+    </script>
+</body>
+</html>
