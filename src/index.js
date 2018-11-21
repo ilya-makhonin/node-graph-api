@@ -3,15 +3,17 @@ const mongoose = require('mongoose');
 const Painting = require('./models/painting');
 const { graphqlHapi, graphiqlHapi } = require('apollo-server-hapi');
 const schema = require('./graphql/schema');
+
 const Inert = require('inert');
 const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
-// const Pack = require('./package');
+
 
 const server = hapi.server({
     port: 4000,
     host: 'localhost'
 });
+
 
 server.route([
     {
@@ -19,7 +21,13 @@ server.route([
         method: 'GET',
         path: '/',
         handler(request, reply) {
-            return `<h1>Our new API</h1>`;
+            return `<section>
+                        <h1>My new API</h1>
+                        <div>
+                            <a href="/api/v1/paintings">GET Painting</a>
+                            <a href="http://localhost:4000/documentation">Documentation API</a>
+                        </div>
+                    </section>`;
         }
     },
     {
@@ -31,7 +39,13 @@ server.route([
             tags: ['api', 'v1', 'painting']
         },
         handler(req, reply) {
-            return Painting.find();
+            return `
+            <a href="/">Back</a>
+            <br/>
+            ${Painting.find()}
+            <br/>
+            <a href="/">Back</a>
+            `;
         }
     },
     {
@@ -44,10 +58,14 @@ server.route([
         },
         handler: (req, reply) => {
             const { name, url, technique } = req.payload;
-            const painting = new Painting({
-                name, url, technique
-            });
-            return painting.save();
+            const painting = new Painting({ name, url, technique });
+            return `
+            <a href="/">Back</a>
+            <br/>
+            ${Painting.find()}
+            <br/>
+            <a href="/">Back</a>
+            `;
         }
     },
     {
@@ -65,22 +83,25 @@ server.route([
                     if (err) return err;
                 });
             }
-            return Painting.find();                            // Возвращаем текущее состояние БД
+            return `
+            <a href="/">Back</a>
+            <br/>
+            ${Painting.find()}
+            <br/>
+            <a href="/">Back</a>
+            `;                            // Возвращаем текущее состояние БД
         }
     },
 ]);
+
 
 const init = async () => {
     await server.register({
         plugin: graphiqlHapi,
         options: {
             path: '/graphiql',
-            graphiqlOptions: {
-                endpointURL: '/graphql'
-            },
-            route: {
-                cors: true
-            }
+            graphiqlOptions: { endpointURL: '/graphql' },
+            route: { cors: true }
         }
     });
 
@@ -88,12 +109,8 @@ const init = async () => {
         plugin: graphqlHapi,
         options: {
             path: '/graphql',
-            graphqlOptions: {
-                schema
-            },
-            route: {
-                cors: true
-            }
+            graphqlOptions: { schema },
+            route: { cors: true }
         }
     });
 
@@ -103,10 +120,7 @@ const init = async () => {
         {
             plugin: HapiSwagger,
             options: {
-                info: {
-                    title: 'Paintings API Documentation',
-                    //version: Pack.version
-                }
+                info: { title: 'Paintings API Documentation', }
             }
         }
     ]);
@@ -115,13 +129,16 @@ const init = async () => {
     console.log(`Server running at: ${server.info.uri}`);
 };
 
+
 mongoose.connect(
     'mongodb://admin:123456zxc@ds239137.mlab.com:39137/node-power-api',
     { useNewUrlParser: true }
 );
 
+
 mongoose.connection.once('open', () => {
     console.log('Connected to database!');
 });
+
 
 init();
