@@ -12,7 +12,10 @@
     "apollo-server-hapi": "^1.3.6",
     "graphql": "^14.0.2",
     "hapi": "^17.4.0",
-    "mongoose": "^5.3.12"
+    "hapi-swagger": "^9.1.3",
+    "inert": "^5.1.2",
+    "mongoose": "^5.3.12",
+    "vision": "^5.4.3"
   },
   "devDependencies": {
     "nodemon": "^1.18.6"
