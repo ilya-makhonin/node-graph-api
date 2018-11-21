@@ -11,6 +11,7 @@ const server = hapi.server({
 
 server.route([
     {
+        /** Обработчик стартовой страницы */
         method: 'GET',
         path: '/',
         handler(request, reply) {
@@ -18,6 +19,7 @@ server.route([
         }
     },
     {
+        /** Обработчик, возвращающий все записи из базы данных */
         method: 'GET',
         path: '/api/v1/paintings',
         handler(req, reply) {
@@ -25,6 +27,7 @@ server.route([
         }
     },
     {
+        /** Обработчик, для загрузки новых данных в базу */
         method: 'POST',
         path: '/api/v1/paintings',
         handler: (req, reply) => {
@@ -36,22 +39,21 @@ server.route([
         }
     },
     {
+        /** Удаление записей по фильтру / всех записей */
         method: 'POST',
         path: '/api/v1/paintings/del',
         handler: (req, reply) => {
             const { name } = req.payload;
             if (name === '') {
-                Painting.deleteMany({}, (err) => {
+                Painting.deleteMany({}, (err) => {             // Удаляем все записи в БД, если не передан аргумент-фильтр
                     if (err) return err;
                 });
-                console.log('It\'s many deleting');
             } else {
-                Painting.deleteOne({ name: name }, (err) => {
+                Painting.deleteOne({ name: name }, (err) => {  // Удаляем записи в БД по переданному фильтру (имени)
                     if (err) return err;
                 });
-                console.log('It\'s one deleting');
             }
-            return Painting.find();
+            return Painting.find();                            // Возвращаем текущее состояние БД
         }
     },
 ]);
