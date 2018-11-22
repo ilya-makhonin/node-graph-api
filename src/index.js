@@ -8,6 +8,9 @@ const Inert = require('inert');
 const Vision = require('vision');
 const HapiSwagger = require('hapi-swagger');
 
+const fs = require('fs');
+
+let html = fs.readFileSync('./src/set_data.html', 'utf8');
 
 const server = hapi.server({
     port: 4000,
@@ -25,9 +28,18 @@ server.route([
                         <h1>My new API</h1>
                         <div>
                             <a href="/api/v1/paintings">GET Painting</a>
-                            <a href="http://localhost:4000/documentation">Documentation API</a>
+                            <a href="/documentation">Documentation API</a>
+                            <a href="/sending">Send data</a>
                         </div>
                     </section>`;
+        }
+    },
+    {
+        /** Обработчик стартовой страницы */
+        method: 'GET',
+        path: '/sending',
+        handler(request, reply) {
+            return html;
         }
     },
     {
@@ -51,8 +63,7 @@ server.route([
             tags: ['api', 'v1', 'painting']
         },
         handler: (req, reply) => {
-            const { name, url, technique } = req.payload;
-            console.dir(req.payload)
+            const { name, url, 'technique[]': technique } = req.payload;
             console.log(name, url, technique);
             if (name === undefined || url === undefined) {
                 return false;

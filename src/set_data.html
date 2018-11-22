@@ -6,6 +6,7 @@
 </head>
 <body>
     <div>
+        <a href="/">Back</a>
         <form action="#" method="post">
             <label>
                 <input type="text" value="Do" id="paintingName" required />
@@ -22,6 +23,7 @@
         </form>
     </div>
 
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script>
         function set_data(event) {
             event.preventDefault();
@@ -34,20 +36,16 @@
             }
 
             technique = technique.split(',');
-            if (technique.length === 1) {
-                technique = `technique=${technique[0]}`;
-            } else {
-                let arr_like_str = '';
-                technique.forEach(elem => {
-                    arr_like_str += `technique=${elem.trim()}&`;
-                });
-                technique = arr_like_str.slice(0, -1);
-            }
+            technique.forEach(elem => {
+                return elem.trim();
+            });
 
-            const xhr = new XMLHttpRequest();
-
-            xhr.open('POST', 'http://localhost:4000/api/v1/paintings', true);
-            xhr.send(`name=${name}&url=${url}&${technique}`);
+            console.log(name, url, technique);
+            $.post('http://localhost:4000/api/v1/paintings', {
+                name: name,
+                url: url,
+                technique: technique
+            });
         }
 
         document.querySelector('#send').onclick = set_data;
