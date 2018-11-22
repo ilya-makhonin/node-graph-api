@@ -78,7 +78,7 @@ server.route([
         handler: (req, reply) => {
             const { name } = req.payload;
             if (name === '') {
-                Painting.deleteMany({}, (err) => {             // Удаляем все записи в БД, если не передан аргумент-фильтр
+                Painting.deleteMany({}, (err) => {  // Удаляем все записи в БД, если не передан аргумент-фильтр
                     if (err) return err;
                 });
             } else {

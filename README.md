@@ -8,4 +8,3 @@ Technology stack:
 + Hapi.js
 + MongoDB
 + Swagger
-+ jQuery
