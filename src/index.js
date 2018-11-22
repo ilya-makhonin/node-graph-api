@@ -35,7 +35,7 @@ server.route([
         }
     },
     {
-        /** Обработчик стартовой страницы */
+        /** Обработчик формы загрузки данных */
         method: 'GET',
         path: '/sending',
         handler(request, reply) {
