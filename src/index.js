@@ -63,8 +63,7 @@ server.route([
             tags: ['api', 'v1', 'painting']
         },
         handler: (req, reply) => {
-            const { name, url, 'technique[]': technique } = req.payload;
-            console.log(name, url, technique);
+            const { name, url, technique } = req.payload;
             if (name === undefined || url === undefined) {
                 return false;
             }
