@@ -8,3 +8,8 @@ Technology stack:
 + Hapi.js
 + MongoDB
 + Swagger
+
+### TODO
+
+- [ ] Add the version developed in Express.js and modify the Front-end part to work with the server API (This task isn't important)
+
